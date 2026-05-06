@@ -1,7 +1,7 @@
 import Sidebar from "./components/layout/Sidebar";
 import Intro from "./components/sections/Intro";
 import EpipolarGeometry from "./components/sections/EpipolarGeometry";
-
+import "./App.css"
 
 export default function App() {
   return (
@@ -9,31 +9,35 @@ export default function App() {
       <input id="toc-drawer" type="checkbox" className="drawer-toggle" />
 
       <div className="drawer-content">
-        <div className="grid grid-cols-1 gap-8 p-6 lg:grid-cols-[16rem_1fr]">
-          
-          {/* Desktop sidebar */}
-          <aside className="hidden lg:block lg:sticky lg:top-6 lg:self-start">
-            <Sidebar />
+        {/* one main container */}
+        <div className="flex min-h-screen">
+          {/* desktop sidebar container */}
+          <aside className="sidebar-container hidden w-auto shrink-0 p-6 lg:block">
+            <div className="sticky top-6">
+              <Sidebar />
+            </div>
           </aside>
 
-          <main className="space-y-24">
-            {/* Mobile toggle */}
+          {/* content container */}
+          <main className="flex-1 px-2 py-4 lg:px-8 lg:py-8">
+            {/* mobile drawer toggle */}
             <label
               htmlFor="toc-drawer"
-              className="btn btn-primary drawer-button lg:hidden sticky top-4 z-10"
+              className="btn btn-primary drawer-button sticky top-4 z-10 mb-8 lg:hidden"
             >
-              Inhalt
+              Content
             </label>
 
-            {/* Sections */}
-            <Intro />
-            <EpipolarGeometry/>
-
+            {/* centered section container */}
+            <div className="section-container w-[80%] space-y-24 lg:w-[60%]">
+              <Intro />
+              <EpipolarGeometry />
+            </div>
           </main>
         </div>
       </div>
 
-      {/* Mobile drawer */}
+      {/* mobile drawer */}
       <div className="drawer-side lg:hidden">
         <label htmlFor="toc-drawer" className="drawer-overlay"></label>
 

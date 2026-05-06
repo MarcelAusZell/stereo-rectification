@@ -325,7 +325,7 @@ left_rectified, right_rectified, H_left_shifted, H_right_shifted = (
         left_img, right_img,
         H_left, H_right,
         width, height,
-        border_value=(0,0,0)
+        border_value=(1,1,1)
     )
 )
 

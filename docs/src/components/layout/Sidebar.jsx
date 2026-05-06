@@ -7,9 +7,9 @@ export default function Sidebar() {
   return (
     <div className="card bg-base-200">
       <div className="card-body p-4">
-        <h2 className="card-title text-base">Contents</h2>
+        <h2 className="card-title font-bold text-xl text-red-400">Contents</h2>
 
-        <ul className="menu">
+        <ul className="menu p-0 text-[15px]">
           {links.map((link) => (
             <li key={link.id}>
               <a href={`#${link.id}`}>{link.title}</a>

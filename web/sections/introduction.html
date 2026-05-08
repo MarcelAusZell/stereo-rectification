@@ -1,0 +1,28 @@
+<section id="introduction">
+  <h1>Introduction</h1>
+
+  In this tutorial I explain how to implement Stereo Rectification from scratch.
+  Stereo rectification is a preprocessing step in stereo vision where two images
+  from different camera viewpoints are transformed so that corresponding points
+  lie on the same horizontal line.
+  After rectification:
+
+  <ul class="bullet-list">
+    <li>
+      a point in the left image and its matching point in the right image
+      have the same y-coordinate
+    </li>
+
+    <li>
+      disparity becomes purely horizontal
+    </li>
+
+    <li>
+      correspondence search changes from a 2D search to a 1D search
+    </li>
+  </ul>
+
+  This makes stereo matching much simpler and faster.
+
+  <img src="images/stereo_rectification.svg" class="intro-image" />
+</section>

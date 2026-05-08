@@ -1,0 +1,49 @@
+.sidebar-container {
+  padding: 10px;
+  border-radius: 10px;
+  margin-left: 10px;
+
+  width: max-content;
+  height: max-content;
+  white-space: nowrap;
+  background-color: rgb(244, 244, 244);
+
+  position: sticky;
+  top: 20px;
+}
+
+.sidebar-list {
+  list-style: none;
+  padding: 0;
+  padding-left: 10px;
+  padding-right: 10px;
+  line-height: 2;
+  margin: 0;
+}
+
+.sidebar-container h3 {
+  padding-left: 10px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  margin: 0;
+  text-decoration: underline;
+  color: tomato;
+  font-size: x-large;
+}
+
+.sidebar-list li {
+  font-size: medium;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.sidebar-list a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.sidebar-list a:hover {
+  color: tomato;
+}

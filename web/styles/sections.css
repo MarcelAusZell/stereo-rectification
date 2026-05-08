@@ -1,0 +1,40 @@
+.content-container {
+  font-size: large;
+  line-height: 1.6;
+  width: 95%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin-left: 20%;
+  margin-right: 20%;
+}
+
+
+
+.content-container section {
+  max-width: 900px;
+  padding: 2rem;
+  line-height: 1.6;
+}
+
+.content-container section h1 {
+  color: tomato;
+  font-size: 2rem;
+  margin: 0;
+
+}
+
+.content-container section h3 {
+  color: tomato;
+  opacity: 0.5;
+  margin: 0;
+}
+
+.content-container section img {
+  display: block;
+  width: 75%;
+  margin: 1.5rem auto;
+  -webkit-user-drag: none;
+  user-select: none;
+}
+

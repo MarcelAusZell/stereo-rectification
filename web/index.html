@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Document</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+  <link rel="stylesheet" href="./styles/sections.css" />
+  <link rel="stylesheet" href="./styles/sidebar.css" />
+
+  <style>
+    .layout {
+      display: flex;
+      font-family: KaTeX_Typewriter;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="layout">
+
+    <div class="sidebar-container">
+      <h3>Contents</h3>
+
+      <ul class="sidebar-list">
+        <ul class="sidebar-list">
+          <li><a href="#introduction">Introduction</a></li>
+          <li><a href="#epipolar-constraint">Epipolar Constraint</a></li>
+          <li><a href="#epipolar-lines">Epipolar Lines</a></li>
+        </ul>
+      </ul>
+    </div>
+
+    <div id="content-container" class="content-container"></div>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+
+  <script>
+    async function loadSection() {
+
+      const introductionResponse =
+        await fetch("./sections/introduction.html");
+
+      const epipolarConstraintResponse =
+        await fetch("./sections/epipolar-constraint.html");
+
+      const epipolarLinesResponse =
+        await fetch("./sections/epipolar-lines.html");
+
+      const introductionHtml =
+        await introductionResponse.text();
+
+      const epipolarConstraintHtml =
+        await epipolarConstraintResponse.text();
+
+      const epipolarLinesResponseHtml =
+        await epipolarLinesResponse.text();
+
+
+      const container =
+        document.getElementById("content-container");
+
+      container.innerHTML += introductionHtml;
+
+      container.innerHTML += epipolarConstraintHtml;
+
+      container.innerHTML += epipolarLinesResponseHtml;
+
+      renderMathInElement(container, {
+        delimiters: [
+          { left: "\\[", right: "\\]", display: true },
+          { left: "\\(", right: "\\)", display: false }
+        ]
+      });
+    }
+
+    loadSection();
+  </script>
+
+</body>
+
+</html>

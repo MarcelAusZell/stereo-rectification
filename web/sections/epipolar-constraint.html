@@ -1,0 +1,66 @@
+<section id="epipolar-constraint">
+  <h1>The Epipolar Constraint</h1>
+  <h3>Notation and Setup</h3>
+
+  Given two cameras with camera projection centers \(C\) and \(C'\), a 3D world point
+  \(P \in \mathbb{R}^3\) is projected onto their corresponding image planes as image points
+
+
+  <ul>
+    <li>\(\tilde{p} = \begin{pmatrix}x & y & 1 \end{pmatrix}^\top\)</li>
+    <li>\(\tilde{p}' = \begin{pmatrix}x' & y' & 1 \end{pmatrix}^\top\)</li>
+  </ul>
+
+
+  Each image plane has a principal point, denoted by \((c_x,c_y), (c_x',c_y')\).
+  It is the point where the optical axis intersects the image plane.
+  The distance between the camera projection centers and the principal points is given by the focal length \(f\).
+
+
+  <img src="images/epipolor_gemoetry.svg" />
+
+  <h3>The Epipolar Constraint</h3>
+
+  The two camera projection centers \(C\) and \(C'\), together with the world point
+  \(P\), span the epipolar plane.
+
+  The relative pose between the two cameras is described by a rotation matrix
+  \(R \in SO(3)\) and a translation vector \(t \in \mathbb{R}^3\).
+
+
+  <ul>
+    <li>\(R_{W \to L} = I\)</li>
+    <li>\(t_{W \to L} = (0,0,0)^\top\)</li>
+    <li>\(R_{W \to R} = R\)</li>
+    <li>\(t_{W \to R} = t\)</li>
+  </ul>
+
+  <img src="images/epipolar_geometry_rotation_translation.svg" />
+
+  A 3D point \(P\) expressed in the coordinate system of the left camera can be
+  transformed into the coordinate system of the right camera via
+
+  \[
+  \begin{align*}
+  P' &= RP + t \\
+  t \times P' &= t \times (RP + t) \\
+  t \times P' &= t \times RP + \underbrace{t \times t}_{=0} \\
+  \underbrace{P' \cdot (t \times P')}_{=0} &= P' \cdot (t \times RP) \\
+  0 &= P' \cdot (t_\times R P) \\
+  0 &= P' \cdot EP \\
+  0 &= P'^\top E P
+  \end{align*}
+  \]
+</section>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script>
+  renderMathInElement(document.body, {
+    delimiters: [
+      { left: "\\[", right: "\\]", display: true },
+      { left: "\\(", right: "\\)", display: false }
+    ]
+  });
+</script>

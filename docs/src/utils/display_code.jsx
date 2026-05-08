@@ -29,7 +29,9 @@ export default function CodeBlock({
       await navigator.clipboard.writeText(code)
       setCopied(true)
       setTimeout(() => setCopied(false), 1500)
-    } catch { }
+    } catch {
+      setCopied(false)
+    }
   }
 
   return (

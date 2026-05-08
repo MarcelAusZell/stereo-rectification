@@ -1,6 +1,7 @@
 const links = [
   { id: "introduction", title: "Introduction" },
-  { id: "epipolar-geometry", title: "Epipolar Geometry" },
+  { id: "epipolar-constraint", title: "Epipolar Constraint" },
+  { id: "epipolar-lines", title: "Epipolar Lines" },
 ];
 
 export default function Sidebar() {

@@ -1,5 +1,7 @@
 
 export default function Intro() {
+  const baseUrl = import.meta.env.BASE_URL;
+
   return (
     <section id="introduction" className="scroll-mt-24">
       <h1 className="mb-4 text-3xl font-bold text-red-400">Introduction</h1>
@@ -26,7 +28,7 @@ export default function Intro() {
 
       <img
         className="block w-[80%] mx-auto mt-10"
-        src="/images/stereo_rectification.svg"
+        src={`${baseUrl}images/stereo_rectification.svg`}
       />
     </section>
   );

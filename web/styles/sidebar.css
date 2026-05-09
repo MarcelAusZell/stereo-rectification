@@ -1,15 +1,10 @@
 .sidebar-container {
   padding: 10px;
-  border-radius: 10px;
-  margin-left: 10px;
-
   width: max-content;
-  height: max-content;
   white-space: nowrap;
-  background-color: rgb(244, 244, 244);
-
   position: sticky;
-  top: 20px;
+  top: 10px;
+  align-self: flex-start;
 }
 
 .sidebar-list {
@@ -46,4 +41,78 @@ html {
 
 .sidebar-list a:hover {
   color: tomato;
+}
+
+.sidebar-toggle {
+  display: none;
+}
+
+.drawer-button {
+  display: none;
+}
+
+.drawer-backdrop {
+  display: none;
+}
+
+@media (max-width: 800px) {
+  .layout {
+    display: block;
+  }
+
+  .drawer-button {
+    display: inline-block;
+    position: fixed;
+    width: 100%;
+    height: 50px;
+    z-index: 1001;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: rgba(255, 156, 138, 0.4);
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    color: tomato;
+    cursor: pointer;
+  }
+
+  .sidebar-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1002;
+
+    height: 100vh;
+    width: 240px;
+    /* padding-top: 4rem; */
+
+    background: white;
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+  }
+
+  .sidebar-toggle:checked~.sidebar-container {
+    transform: translateX(0);
+  }
+
+  .sidebar-toggle:checked~.drawer-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.25);
+  }
+
+  .content-container {
+    width: 100%;
+    padding-inline: 1rem;
+    box-sizing: border-box;
+  }
+
+  .content-container section {
+    max-width: 100%;
+  }
 }

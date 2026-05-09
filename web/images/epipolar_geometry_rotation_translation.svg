@@ -272,16 +272,16 @@
 <use xlink:href="#glyph-1-0" x="213.1288" y="33.709"/>
 </g>
 <g clip-path="url(#clip-6)">
-<path fill="none" stroke-width="0.79701" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(100%, 50%, 0%)" stroke-opacity="1" stroke-miterlimit="10" d="M 45.353219 -35.073906 C 110.798531 -58.894219 158.49775 -58.894219 223.189156 -35.347344 " transform="matrix(1, 0, 0, -1, -15.154, 4.055)"/>
+<path fill="none" stroke-width="0.79701" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(100%, 38.822937%, 27.842712%)" stroke-opacity="1" stroke-miterlimit="10" d="M 45.353219 -35.073906 C 110.798531 -58.894219 158.49775 -58.894219 223.189156 -35.347344 " transform="matrix(1, 0, 0, -1, -15.154, 4.055)"/>
 </g>
-<path fill="none" stroke-width="0.79701" stroke-linecap="round" stroke-linejoin="round" stroke="rgb(100%, 50%, 0%)" stroke-opacity="1" stroke-miterlimit="10" d="M -2.551778 3.111304 C -2.083749 1.244902 -1.045076 0.363865 -0.000913297 0.00045479 C -1.047623 -0.362683 -2.083803 -1.245122 -2.551244 -3.11192 " transform="matrix(0.93968, -0.34201, -0.34201, -0.93968, 208.41117, 39.26574)"/>
-<g fill="rgb(100%, 50%, 0%)" fill-opacity="1">
+<path fill="none" stroke-width="0.79701" stroke-linecap="round" stroke-linejoin="round" stroke="rgb(100%, 38.822937%, 27.842712%)" stroke-opacity="1" stroke-miterlimit="10" d="M -2.551778 3.111304 C -2.083749 1.244902 -1.045076 0.363865 -0.000913297 0.00045479 C -1.047623 -0.362683 -2.083803 -1.245122 -2.551244 -3.11192 " transform="matrix(0.93968, -0.34201, -0.34201, -0.93968, 208.41117, 39.26574)"/>
+<g fill="rgb(100%, 38.822937%, 27.842712%)" fill-opacity="1">
 <use xlink:href="#glyph-2-0" x="113.224" y="52.469"/>
 </g>
-<g fill="rgb(100%, 50%, 0%)" fill-opacity="1">
+<g fill="rgb(100%, 38.822937%, 27.842712%)" fill-opacity="1">
 <use xlink:href="#glyph-2-1" x="119.339442" y="52.469"/>
 </g>
-<g fill="rgb(100%, 50%, 0%)" fill-opacity="1">
+<g fill="rgb(100%, 38.822937%, 27.842712%)" fill-opacity="1">
 <use xlink:href="#glyph-2-2" x="122.876564" y="52.469"/>
 </g>
 </svg>

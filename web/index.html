@@ -12,10 +12,10 @@
   <link rel="stylesheet" href="./styles/sidebar.css" />
 
   <style>
-    /* body {
-      color: white;
-      background: black;
-    } */
+    body {
+      margin: 0;
+
+    }
 
     .layout {
       display: flex;
@@ -28,15 +28,21 @@
 
   <div class="layout">
 
+    <input type="checkbox" id="sidebar-toggle" class="sidebar-toggle" />
+
+    <label for="sidebar-toggle" class="drawer-button">
+      Contents
+    </label>
+
+    <label for="sidebar-toggle" class="drawer-backdrop"></label>
+
     <div class="sidebar-container">
       <h3>Contents</h3>
 
       <ul class="sidebar-list">
-        <ul class="sidebar-list">
-          <li><a href="#introduction">Introduction</a></li>
-          <li><a href="#epipolar-constraint">Epipolar Constraint</a></li>
-          <li><a href="#epipolar-lines">Epipolar Lines</a></li>
-        </ul>
+        <li><a href="#introduction">Introduction</a></li>
+        <li><a href="#epipolar-constraint">Epipolar Constraint</a></li>
+        <li><a href="#epipolar-lines">Epipolar Lines</a></li>
       </ul>
     </div>
 

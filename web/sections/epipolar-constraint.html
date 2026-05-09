@@ -1,66 +1,204 @@
 <section id="epipolar-constraint">
   <h1>The Epipolar Constraint</h1>
+
   <h3>Notation and Setup</h3>
 
-  Given two cameras with camera projection centers \(C\) and \(C'\), a 3D world point
-  \(P \in \mathbb{R}^3\) is projected onto their corresponding image planes as image points
+  Given two cameras with camera projection centers \(C\) and \(C'\),
+  a 3D world point
 
+  \[
+  \tilde{P} =
+  \begin{pmatrix}
+  X \\ Y \\ Z \\ 1
+  \end{pmatrix}
+  \]
 
-  <ul>
-    <li>\(\tilde{p} = \begin{pmatrix}x & y & 1 \end{pmatrix}^\top\)</li>
-    <li>\(\tilde{p}' = \begin{pmatrix}x' & y' & 1 \end{pmatrix}^\top\)</li>
-  </ul>
+  is projected onto their corresponding image planes at the image points
+  \(\tilde{p}_I\) and \(\tilde{p}_I'\).
 
+  Each image plane has a principal point, denoted by
+  \((c_x,c_y)\) and \((c_x',c_y')\).
+  The principal point is the point where the optical axis intersects the image plane.
 
-  Each image plane has a principal point, denoted by \((c_x,c_y), (c_x',c_y')\).
-  It is the point where the optical axis intersects the image plane.
-  The distance between the camera projection centers and the principal points is given by the focal length \(f\).
-
+  The image plane is located at distance \(f\) from the camera projection center
+  along the optical axis, where \(f\) denotes the focal length.
 
   <img src="images/epipolor_gemoetry.svg" />
 
+  Before continuing, we must distinguish between:
+
+  <ul>
+    <li>
+      image coordinates, which are affected by camera intrinsics such as
+      focal length, principal point offset, as well as possibly pixel scaling and
+    </li>
+
+    <li>
+      normalized image coordinates, obtained after removing the camera
+      intrinsic matrix \(K\)
+    </li>
+  </ul>
+
+  The image coordinates are given by
+
+  <ul>
+    <li>
+      \(
+      \tilde{p}_I =
+      \begin{pmatrix}
+      u & v & 1
+      \end{pmatrix}^\top
+      \)
+    </li>
+
+    <li>
+      \(
+      \tilde{p}_I' =
+      \begin{pmatrix}
+      u' & v' & 1
+      \end{pmatrix}^\top
+      \)
+    </li>
+  </ul>
+
+  The normalized image coordinates are
+
+  <ul>
+    <li>
+      \(
+      \tilde{p}_N =
+      K^{-1}\tilde{p}_I
+      =
+      \begin{pmatrix}
+      x & y & 1
+      \end{pmatrix}^\top
+      \)
+    </li>
+
+    <li>
+      \(
+      \tilde{p}_N' =
+      K'^{-1}\tilde{p}_I'
+      =
+      \begin{pmatrix}
+      x' & y' & 1
+      \end{pmatrix}^\top
+      \)
+    </li>
+  </ul>
+  The difference is important as epipolar geometry
+  fundamentally describes the geometric relationship between camera rays
+  and the relative motion of the cameras, independent of the specific image
+  sensor used.
+  As established above pixel coordinates \((u,v)\) depend on camera intrinsics such as focal length,
+  image resolution, principal point offset, and skew. Consequently, the same
+  viewing ray can produce different pixel coordinates for different cameras.
+
+  By transforming image coordinates into normalized image coordinates,
+  these camera-specific effects are removed. The resulting coordinates
+  describe only the viewing direction of the ray in the camera coordinate
+  system.
+
+
+  <img src="images/normalized_image_plane.svg" />
+
+
+
+
   <h3>The Epipolar Constraint</h3>
 
-  The two camera projection centers \(C\) and \(C'\), together with the world point
-  \(P\), span the epipolar plane.
+  The two camera projection centers \(C\) and \(C'\), together with
+  the world point \(P\), span the epipolar plane.
 
-  The relative pose between the two cameras is described by a rotation matrix
-  \(R \in SO(3)\) and a translation vector \(t \in \mathbb{R}^3\).
-
+  Without loss of generality, I will choose the coordinate system of the
+  left camera as the world coordinate system.
+  Consequently, the left camera frame (\(L\)) has identity rotation and zero translation from the world frame (\(W\)):
 
   <ul>
     <li>\(R_{W \to L} = I\)</li>
     <li>\(t_{W \to L} = (0,0,0)^\top\)</li>
+  </ul>
+
+  The relative pose of the right camera with respect to the left camera is
+  therefore completely described by a rotation matrix
+
+  \(
+  R \in SO(3)
+  \)
+
+  and a translation vector
+
+  \(
+  t \in \mathbb{R}^3.
+  \)
+
+  <ul>
     <li>\(R_{W \to R} = R\)</li>
     <li>\(t_{W \to R} = t\)</li>
   </ul>
 
   <img src="images/epipolar_geometry_rotation_translation.svg" />
 
-  A 3D point \(P\) expressed in the coordinate system of the left camera can be
-  transformed into the coordinate system of the right camera via
+  A world point \(P\) can be expressed in the coordinate systems of the
+  left and right cameras as \(P\) and \(P'\), respectively.
+  Thus the following relationship holds:
+
+
+
 
   \[
   \begin{align*}
-  P' &= RP + t \\
-  t \times P' &= t \times (RP + t) \\
-  t \times P' &= t \times RP + \underbrace{t \times t}_{=0} \\
-  \underbrace{P' \cdot (t \times P')}_{=0} &= P' \cdot (t \times RP) \\
-  0 &= P' \cdot (t_\times R P) \\
-  0 &= P' \cdot EP \\
-  0 &= P'^\top E P
+  P' &= RP + t \\[4pt]
+
+  \lambda' \tilde{p}_N' &= R(\lambda \tilde{p}_N) + t
+  && \textcolor{lightgray}{\left(
+  \begin{array}{l}
+  P = \lambda \tilde{p}_N \\
+  P' = \lambda' \tilde{p}_N'
+  \end{array}
+  \right)} \\[6pt]
+
+  t \times (\lambda' \tilde{p}_N')
+  &=
+  t \times (\lambda R \tilde{p}_N + t)
+  && \textcolor{lightgray}{\left( \texttt{Cross product from left} \right)} \\[6pt]
+
+  \lambda' (t \times \tilde{p}_N')
+  &=
+  \lambda (t \times R\tilde{p}_N)
+  +
+  \underbrace{t \times t}_{=0}
+  && \textcolor{lightgray}{\left( \texttt{Distributivity of cross product} \right)} \\[6pt]
+
+  \lambda'
+  \underbrace{\tilde{p}_N'^\top (t \times \tilde{p}_N')}_{=0}
+  &=
+  \lambda \tilde{p}_N'^\top (t \times R\tilde{p}_N)
+  && \textcolor{lightgray}{\left( \texttt{Dot product from left} \right)} \\[6pt]
+
+  0
+  &=
+  \lambda \tilde{p}_N'^\top (t_\times R \tilde{p}_N)
+  && \textcolor{lightgray}{\left(
+  t_\times =
+  \begin{bmatrix}
+  0 & -t_z & t_y \\
+  t_z & 0 & -t_x \\
+  -t_y & t_x & 0
+  \end{bmatrix}
+  \right)} \\[10pt]
+
+  0
+  &=
+  \tilde{p}_N'^\top (t_\times R) \tilde{p}_N
+  && \textcolor{lightgray}{\left( \lambda \neq 0 \right)} \\[6pt]
+
+  0
+  &=
+  \tilde{p}_N'^\top E \tilde{p}_N
+  && \textcolor{lightgray}{\left( \texttt{Essential matrix } E = t_\times R \right)}
   \end{align*}
   \]
-</section>
-</div>
+  which establishes a correspondence between both image points through the so called Essential matrix \(E\).
 
-<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
-<script>
-  renderMathInElement(document.body, {
-    delimiters: [
-      { left: "\\[", right: "\\]", display: true },
-      { left: "\\(", right: "\\)", display: false }
-    ]
-  });
-</script>
+</section>

@@ -1,6 +1,211 @@
 <section id="epipolar-lines">
   <h1>Epipolar Lines</h1>
 
+  <h3>Normalized Camera Coordinates</h3>
+
+  The essential matrix that we just derived operates on normalized camera coordinates rather
+  than directly on image pixel coordinates. We can change that though.
+  Our pixels
+  <ul>
+    <li>
+      \(
+      \tilde{p}_I =
+      \begin{pmatrix}
+      u & v & 1
+      \end{pmatrix}^\top
+      \)
+    </li>
+
+    <li>
+      \(
+      \tilde{p}_I' =
+      \begin{pmatrix}
+      u' & v' & 1
+      \end{pmatrix}^\top
+      \)
+    </li>
+  </ul>
+  contain camera intrinsic informations \(K\) and \(K'\) such as such as the focal length and principal point
+
+
+  \[
+  K =
+  \begin{pmatrix}
+  f_x & 0 & c_x \\
+  0 & f_y & c_y \\
+  0 & 0 & 1
+  \end{pmatrix},
+  \qquad
+  K' =
+  \begin{pmatrix}
+  f_x' & 0 & c_x' \\
+  0 & f_y' & c_y' \\
+  0 & 0 & 1
+  \end{pmatrix}.
+  \]
+
+  Using these matrices, we can transform the image pixel coordinates
+  into normalized camera coordinates:
+
+  <ul>
+    <li>
+      \(
+      \tilde{p}_N =
+      K^{-1}\tilde{p}_I
+      =
+      \begin{pmatrix}
+      x & y & 1
+      \end{pmatrix}^\top
+      \)
+    </li>
+
+    <li>
+      \(
+      \tilde{p}_N' =
+      K'^{-1}\tilde{p}_I'
+      =
+      \begin{pmatrix}
+      x' & y' & 1
+      \end{pmatrix}^\top
+      \)
+    </li>
+  </ul>
+
+  Substituting this into the epipolar constraint gives
+  <!-- Ab hier wird es inkonsistent bitte hilfe -->
+
+  Substituting this into the epipolar constraint gives
+
+  \[
+  \begin{align*}
+  0
+  &= \tilde{p}_N'^\top E \tilde{p}_N \\[4pt]
+  &= \left(K'^{-1}\tilde{p}_I'\right)^\top E \left(K^{-1}\tilde{p}_I\right)
+  && \textcolor{lightgray}{\left(
+  \begin{array}{l}
+  \tilde{p}_N = K^{-1}\tilde{p}_I \\
+  \tilde{p}_N' = K'^{-1}\tilde{p}_I'
+  \end{array}
+  \right)} \\[6pt]
+  &= \tilde{p}_I'^\top K'^{-T} E K^{-1}\tilde{p}_I
+  && \textcolor{lightgray}{\left( \texttt{Transpose rule } (AB)^\top = B^\top A^\top \right)} \\[6pt]
+  &= \tilde{p}_I'^\top F\tilde{p}_I
+  && \textcolor{lightgray}{\left( \texttt{Fundamental matrix } F = K'^{-T} E K^{-1} \right)}
+  \end{align*}
+  \]
+
+  where \(F\) denotes the so called Fundamental Matrix.
+
+  The epipolar constraint can now be written directly in image coordinates as
+
+  \[
+  \tilde{p}_I'^\top F \tilde{p}_I = 0.
+  \]
+
+
+
+
+
+  <h3>
+    Epipolar Lines
+  </h3>
+
+  Given a point \(\tilde{p}_I\) in the left image, the corresponding point
+  in the right image is not arbitrary.
+  Instead, it is constrained to lie on a specific line in the right image,
+  called the epipolar line.
+
+  To see why this represents a line, let us expand the expression
+  explicitly.
+
+  Given
+
+  \[
+  F =
+  \begin{pmatrix}
+  f_{11} & f_{12} & f_{13} \\
+  f_{21} & f_{22} & f_{23} \\
+  f_{31} & f_{32} & f_{33}
+  \end{pmatrix},
+  \qquad
+  \tilde{p}_I =
+  \begin{pmatrix}
+  u \\
+  v \\
+  1
+  \end{pmatrix}
+  \]
+
+  we multiply the fundamental matrix with the image point:
+
+  \[
+  F\tilde{p}_I
+  =
+  \begin{pmatrix}
+  f_{11}u + f_{12}v + f_{13} \\
+  f_{21}u + f_{22}v + f_{23} \\
+  f_{31}u + f_{32}v + f_{33}
+  \end{pmatrix}
+  =:
+  \begin{pmatrix}
+  a \\
+  b \\
+  c
+  \end{pmatrix}
+  =: l'.
+  \]
+
+  The epipolar constraint can therefore be written as
+
+  \[
+  \begin{align*}
+  \tilde{p}_I'^\top F \tilde{p}_I &= 0 \\
+  \tilde{p}_I'^\top l' &= 0 \\
+  \begin{pmatrix}
+  u' &
+  v' &
+  1
+  \end{pmatrix}
+  \begin{pmatrix}
+  a \\
+  b \\
+  c
+  \end{pmatrix} &= 0 \\
+  au' + bv' + c &= 0.
+  \end{align*}
+  \]
+
+  Rearranging gives
+
+  \[
+  v' = -\frac{a}{b}u' - \frac{c}{b}.
+  \]
+
+  This has exactly the form of a standard 2D line equation
+
+  \[
+  y = mx + d.
+  \]
+
+  Therefore, \(l' = F\tilde{p}_I\) represents a line in the right image,
+  called the epipolar line corresponding to the point \(\tilde{p}_I\).
+
+  Similarly, a point \(\tilde{p}_I'\) in the right image defines an
+  epipolar line in the left image by
+
+  \[
+  l = F^\top \tilde{p}_I'.
+  \]
+
+  Every valid correspondence point \(\tilde{p}_I'\) must therefore lie on
+  the line \(l'\).
+
+  This is important because, instead of searching for corresponding
+  points over the entire image, the search only needs to be performed
+  along the corresponding epipolar line.
+
   <img src="images/epipolor_gemoetry_unaligned_cameras.svg" />
-  <img src="images/epipolor_gemoetry_aligned_cameras.svg" />
+
+
+
 </section>

@@ -17,11 +17,16 @@
   line-height: 1.6;
 }
 
+.content-container ul {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding-left: 2rem;
+}
+
 .content-container section h1 {
   color: tomato;
   font-size: 2rem;
   margin: 0;
-
 }
 
 .content-container section h3 {
@@ -37,4 +42,3 @@
   -webkit-user-drag: none;
   user-select: none;
 }
-

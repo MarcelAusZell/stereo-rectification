@@ -195,23 +195,6 @@ def loop_zhang_shear(H, width, height):
     return S
 
 
-left_img = plt.imread("blender/images/left.png")
-right_img = plt.imread("blender/images/right.png")
-
-height, width = left_img.shape[:2]
-
-K_left, R_left, T_left = get_calibration("blender/calibration/left_cal")
-K_right, R_right, T_right = get_calibration("blender/calibration/right_cal")
-
-F = compute_fundamental_matrix(
-    K1=K_left,
-    K2=K_right,
-    R1=R_left,
-    R2=R_right,
-    T1=T_left,
-    T2=T_right,
-)
-
 def stereo_rectify_no_cv2(K1, K2, R1_c2w, R2_c2w, C1_world, C2_world):
     """
     K1, K2:
@@ -305,36 +288,54 @@ def stereo_rectify_no_cv2(K1, K2, R1_c2w, R2_c2w, C1_world, C2_world):
     return H1, H2
 
 
-# Rectifying Homography which makes epipolar lines horizontal
-H_left, H_right = stereo_rectify_no_cv2(
-    K_left, K_right,
-    R_left, R_right,
-    T_left, T_right,
-)
 
-# Shearing transformation for horizontal undistortion
-S_left = loop_zhang_shear(H_left, width, height)
-S_right = loop_zhang_shear(H_right, width, height)    
+def compute_rectification(left_img, right_img, K_left, K_right, R_left, R_right, T_left, T_right):
+    height, width = left_img.shape[:2]
 
-# Combining all transformations
-H_left = S_left @ H_left
-H_right = S_right @ H_right
-
-left_rectified, right_rectified, H_left_shifted, H_right_shifted = (
-    tight_warp(
-        left_img, right_img,
-        H_left, H_right,
-        width, height,
-        border_value=(1,1,1)
+    # Rectifying Homography which makes epipolar lines horizontal
+    H_left, H_right = stereo_rectify_no_cv2(
+        K_left, K_right,
+        R_left, R_right,
+        T_left, T_right,
     )
-)
 
-cv2.imwrite("left_rectified.png", cv2.cvtColor(left_rectified * 255, cv2.COLOR_RGB2BGR))
-cv2.imwrite("right_rectified.png", cv2.cvtColor(right_rectified * 255, cv2.COLOR_RGB2BGR))
+    # Shearing transformation for horizontal undistortion
+    S_left = loop_zhang_shear(H_left, width, height)
+    S_right = loop_zhang_shear(H_right, width, height)    
 
-fig, axs = plt.subplots(2,1)
-axs[0].imshow(np.concatenate((left_img, right_img), axis=1))
-axs[1].imshow(np.concatenate((left_rectified, right_rectified), axis=1))
-for ax in axs: ax.axis("off")
-plt.tight_layout()
-plt.show()
+    # Combining all transformations
+    H_left = S_left @ H_left
+    H_right = S_right @ H_right
+
+    left_rectified, right_rectified, H_left_shifted, H_right_shifted = (
+        tight_warp(
+            left_img, right_img,
+            H_left, H_right,
+            width, height,
+            border_value=(1,1,1)
+        )
+    )
+    return left_rectified, right_rectified, H_left_shifted, H_right_shifted
+
+if __name__ == "__main__":
+    left_img = plt.imread("blender/images/left.png")
+    right_img = plt.imread("blender/images/right.png")
+
+    height, width = left_img.shape[:2]
+
+    K_left, R_left, T_left = get_calibration("blender/calibration/left_cal")
+    K_right, R_right, T_right = get_calibration("blender/calibration/right_cal")
+
+    left_rectified, right_rectified, H_left_shifted, H_right_shifted = compute_rectification(
+        left_img,
+        right_img,
+        K_left,
+        K_right,
+        R_left,
+        R_right,
+        T_left,
+        T_right,
+    )
+
+    cv2.imwrite("left_rectified.png", cv2.cvtColor(left_rectified * 255, cv2.COLOR_RGB2BGR))
+    cv2.imwrite("right_rectified.png", cv2.cvtColor(right_rectified * 255, cv2.COLOR_RGB2BGR))

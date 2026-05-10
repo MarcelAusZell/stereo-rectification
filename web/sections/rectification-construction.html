@@ -1,0 +1,117 @@
+<section id="rectification-construction">
+  <h1>Rectification construction</h1>
+
+  <h3>Rectifiying Rotation</h3>
+
+  As established above the right camera pose relative to the left camera is
+
+  \[P' = RP + t\]
+  <img src="images/01_rectification_homography.svg" />
+  As such and in the convention that we have used this far (left camera frame coincides with world camera frame)
+  the translation vector \(t\) points from the left camera to the right camera.
+
+  <img src="images/02_rectification_homography.svg" />
+  Because we want to make disparity horizontal we choose this baseline vector (just normalized) as the rectified x-axis
+
+  <p style="color: red;">
+    \[r_x = \frac{t}{\|t\|}\]
+  </p>
+
+  <img src="images/03_rectification_homography.svg" />
+
+  From there we only need two more perpendicular unit vectors.
+  A common choice is to preserve the orginal "up" direction as much as possible. So we can use it to construct the new
+  rectifiying z-axis
+  <p style="color: navy;">
+    \[r_z = \frac{r_x \times u_{\text{old}}}{\|r_x \times u_{\text{old}}\|}\]
+  </p>
+
+  <img src="images/04_rectification_homography.svg" />
+
+  With two orthornormal axis the third one is simply the cross product those two
+  <p style="color: green;">
+    \[r_y = r_z \times r_x\]
+  </p>
+
+  <img src="images/05_rectification_homography.svg" />
+
+  Putting it all together the rectifiying rotation is built from these axes
+
+  \[R_{\text{rect}} = \begin{bmatrix} r_x^\top \\ r_y^\top \\ r_z^\top \end{bmatrix}\]
+
+  <h3>Rectifiying Intrinsics</h3>
+  After choosing the rectified rotation, we also need to decide how the
+  rectified camera projects points back onto the image plane.
+
+  This is described by a new intrinsic matrix
+
+  \[
+  K_{\text{rect}} =
+  \begin{bmatrix}
+  f_x^{\text{rect}} & 0 & c_x^{\text{rect}} \\
+  0 & f_y^{\text{rect}} & c_y^{\text{rect}} \\
+  0 & 0 & 1
+  \end{bmatrix}
+  \]
+
+  The important point is that both rectified cameras should use the same
+  intrinsic matrix. This means that after rectification, both images are
+  projected onto the same kind of virtual image plane.
+
+  A simple choice is to use a shared focal length, for example the average
+  of the original focal lengths:
+
+  \[
+  f_x^{\text{rect}} = f_y^{\text{rect}}
+  =
+  \frac{f_x + f_y + f_x' + f_y'}{4}
+  \]
+
+  For now we can set the skew to zero and place the new principal point near the
+  center of the rectified image:
+
+  \[
+  c_x^{\text{rect}} = \frac{w}{2},
+  \qquad
+  c_y^{\text{rect}} = \frac{h}{2}
+  \]
+
+  where \(w\) and \(h\) are the width and height of the rectified output image.
+
+  So the rectified intrinsic matrix becomes
+
+  \[
+  K_{\text{rect}} =
+  \begin{bmatrix}
+  f^{\text{rect}} & 0 & \frac{w}{2} \\
+  0 & f^{\text{rect}} & \frac{h}{2} \\
+  0 & 0 & 1
+  \end{bmatrix}
+  \]
+
+  Again, this matrix does not come from a real camera. It defines a virtual camera
+  that we use only for the rectified images.
+
+  Together, \(R_{\text{rect}}\) and \(K_{\text{rect}}\) define where each
+  original image point should move in the rectified image. For the left image,
+  the rectifying homography is
+
+  \[
+  H =
+  K_{\text{rect}} R_{\text{rect}} K^{-1}
+  \]
+
+  and for the right image it is
+
+  \[
+  H' =
+  K_{\text{rect}} R_{\text{rect}} R^\top K'^{-1}
+  \]
+
+  The term \(K^{-1}\) first turns a pixel into a normalized camera ray.
+  The rotation then expresses this ray in the rectified camera frame.
+  Finally, \(K_{\text{rect}}\) projects the rotated ray back into pixel
+  coordinates of the rectified image.
+
+
+</section>

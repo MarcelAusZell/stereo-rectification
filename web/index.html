@@ -14,7 +14,8 @@
   <style>
     body {
       margin: 0;
-
+      /* filter: invert(1);
+      background-color: black; */
     }
 
     .layout {
@@ -43,6 +44,8 @@
         <li><a href="#introduction">Introduction</a></li>
         <li><a href="#epipolar-constraint">Epipolar Constraint</a></li>
         <li><a href="#epipolar-lines">Epipolar Lines</a></li>
+        <li><a href="#rectification-goal">Rectification Goal</a></li>
+        <li><a href="#rectification-construction">Rectification Construction</a></li>
       </ul>
     </div>
 
@@ -57,33 +60,26 @@
   <script>
     async function loadSection() {
 
-      const introductionResponse =
-        await fetch("./sections/introduction.html");
+      const introductionResponse = await fetch("./sections/introduction.html");
+      const epipolarConstraintResponse = await fetch("./sections/epipolar-constraint.html");
+      const epipolarLinesResponse = await fetch("./sections/epipolar-lines.html");
+      const rectificationGoalResponse = await fetch("./sections/rectification-goal.html");
+      const rectificationConstructionResponse = await fetch("./sections/rectification-construction.html");
 
-      const epipolarConstraintResponse =
-        await fetch("./sections/epipolar-constraint.html");
-
-      const epipolarLinesResponse =
-        await fetch("./sections/epipolar-lines.html");
-
-      const introductionHtml =
-        await introductionResponse.text();
-
-      const epipolarConstraintHtml =
-        await epipolarConstraintResponse.text();
-
-      const epipolarLinesResponseHtml =
-        await epipolarLinesResponse.text();
+      const introductionHtml = await introductionResponse.text();
+      const epipolarConstraintHtml = await epipolarConstraintResponse.text();
+      const epipolarLinesResponseHtml = await epipolarLinesResponse.text();
+      const rectificationGoalResponseHtml = await rectificationGoalResponse.text();
+      const rectificationConstructionResponseHtml = await rectificationConstructionResponse.text();
 
 
-      const container =
-        document.getElementById("content-container");
+      const container = document.getElementById("content-container");
 
       container.innerHTML += introductionHtml;
-
       container.innerHTML += epipolarConstraintHtml;
-
       container.innerHTML += epipolarLinesResponseHtml;
+      container.innerHTML += rectificationGoalResponseHtml;
+      container.innerHTML += rectificationConstructionResponseHtml;
 
       renderMathInElement(container, {
         delimiters: [

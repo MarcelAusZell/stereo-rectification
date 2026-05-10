@@ -9,12 +9,16 @@
 }
 
 .content-container section {
+  width: 100%;
   max-width: 900px;
   line-height: 1.6;
 }
 
 .content-container section:first-child {
   padding-top: 2rem;
+}
+.content-container section:last-child {
+  padding-bottom: 2rem;
 }
 
 .content-container ul {
@@ -55,10 +59,33 @@
 }
 
 @media (max-width: 800px) {
-
-
   .content-container section:first-child {
     padding-top: 4rem;
   }
+}
 
+.side-to-side-images {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  margin: 1.5rem auto;
+}
+
+.side-to-side-images img {
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  margin: 0;
+}
+
+::selection {
+  background: tomato;
+  color: white;
+}
+
+::-moz-selection {
+  background: tomato;
+  color: white;
 }

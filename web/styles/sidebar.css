@@ -1,10 +1,14 @@
 .sidebar-container {
-  padding: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-right: 20px;
   width: max-content;
   white-space: nowrap;
   position: sticky;
-  top: 10px;
+  top: 0;
   align-self: flex-start;
+  background-color: rgba(255, 229, 224, 0.571);
+  min-height: 100vh;
 }
 
 .sidebar-list {
@@ -19,7 +23,7 @@
 .sidebar-container h3 {
   padding-left: 10px;
   padding-bottom: 10px;
-  padding-top: 10px;
+  padding-top: 20px;
   margin: 0;
   text-decoration: underline;
   color: tomato;
@@ -41,6 +45,7 @@ html {
 
 .sidebar-list a:hover {
   color: tomato;
+  text-decoration: underline;
 }
 
 .sidebar-toggle {

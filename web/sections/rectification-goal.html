@@ -1,0 +1,71 @@
+<section id="rectification-goal">
+  <h1>The Goal of Rectification</h1>
+
+  <h3>Why Rectification?</h3>
+
+  Searching along epipolar lines already reduces the correspondence problem
+  from a two-dimensional search to a one-dimensional search. However, the
+  epipolar lines may still be slanted and different for each image point.
+
+  Rectification simplifies this further by warping both images with suitable
+  homographies so that all corresponding epipolar lines become horizontal and
+  aligned with the image rows.
+
+  After rectification, for corresponding points
+
+  \[
+  p_I =
+  \begin{bmatrix}
+  u \\ v \\ 1
+  \end{bmatrix},
+  \qquad
+  p_I' =
+  \begin{bmatrix}
+  u' \\ v' \\ 1
+  \end{bmatrix},
+  \]
+
+  we have
+
+  \[
+  v = v'.
+  \]
+
+  Therefore, matching no longer requires searching along arbitrary epipolar
+  lines. Instead, for a point in the left image, the matching point in the
+  right image only needs to be searched along the same image row.
+
+
+  <h3>Geometric Intuition</h3>
+
+  The reason epipolar lines become horizontal after rectification can be
+  understood geometrically.
+
+  Originally, the two cameras may observe the scene from different orientations,
+  causing the epipolar lines to appear slanted and irregular in the images.
+
+  Rectification virtually rotates both cameras into a new common configuration
+  where
+
+  <ul>
+    <li>both image planes are parallel</li>
+    <li>both cameras look in the same direction</li>
+    <li>the translation between the cameras is purely horizontal</li>
+  </ul>
+
+  In this virtual stereo setup, corresponding scene points naturally appear on
+  the same image row. As a result, all epipolar lines become horizontal.
+
+  Importantly, the physical cameras are not moved. Instead, both images are
+  warped using homographies so that they appear as if they had been captured by
+  this better-aligned virtual stereo pair.
+
+  <img src="images/epipolor_gemoetry_aligned_cameras.svg" />
+
+  <div class="side-to-side-images">
+    <img src="images/epipolar_lines_rectified_left.svg" />
+    <img src="images/epipolar_lines_rectified_right.svg" />
+  </div>
+
+
+</section>
